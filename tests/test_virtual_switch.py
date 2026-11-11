@@ -43,6 +43,19 @@ from .commons import *
         ),
         # switch
         (False, "turn_on", "turn_off", "turn_on", {"entity_id": "switch.test"}, STATE_ON, "turn_off", {"entity_id": "switch.test"}, STATE_OFF, True),
+        # light with brightness — expected state stays on/off, not "100"
+        (
+            False,
+            "turn_on/brightness_pct:100",
+            "turn_off",
+            "turn_on",
+            {"entity_id": "switch.test", "brightness_pct": "100"},
+            STATE_ON,
+            "turn_off",
+            {"entity_id": "switch.test"},
+            STATE_OFF,
+            True,
+        ),
         # inversed switch
         (True, "turn_on", "turn_off", "turn_off", {"entity_id": "switch.test"}, STATE_OFF, "turn_on", {"entity_id": "switch.test"}, STATE_ON, True),
         # Climate

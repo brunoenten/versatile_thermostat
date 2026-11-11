@@ -518,7 +518,10 @@ class UnderlyingSwitch(UnderlyingEntity):
         else:
             command = SERVICE_TURN_ON if take_on else SERVICE_TURN_OFF
 
-        if value is None:
+        # Expected entity state for is_device_active. turn_on/turn_off extras
+        # (e.g. brightness_pct:100) are service data only — light/switch state
+        # remains "on"/"off", not the argument value.
+        if value is None or command in (SERVICE_TURN_ON, SERVICE_TURN_OFF, "turn_on", "turn_off"):
             value = STATE_ON if take_on else STATE_OFF
 
         return command, data, value
